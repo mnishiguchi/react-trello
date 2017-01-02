@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React                from 'react'
 import { connect }          from 'react-redux'
 import { Link }             from 'react-router'
 
-import { setDocumentTitle, renderErrorsFor }  from '../lib'
+import { setDocumentTitle, renderErrorForRef }  from '../utils/viewUtils'
 
-import actions from '../actions/registration'
+import actions from '../actions'
 
 class SignUpView extends React.Component {
   render() {
@@ -19,7 +19,7 @@ class SignUpView extends React.Component {
             placeholder="First name"
             required={true}
           />
-          {renderErrorsFor(errors, 'first_name')}
+          {renderErrorForRef(errors, 'first_name')}
         </div>
         <div className="field">
           <input
@@ -28,7 +28,7 @@ class SignUpView extends React.Component {
             placeholder="Last name"
             required={true}
           />
-          {renderErrorsFor(errors, 'last_name')}
+          {renderErrorForRef(errors, 'last_name')}
         </div>
         <div className="field">
           <input
@@ -37,7 +37,7 @@ class SignUpView extends React.Component {
             placeholder="Email"
             required={true}
           />
-          {renderErrorsFor(errors, 'email')}
+          {renderErrorForRef(errors, 'email')}
         </div>
         <div className="field">
           <input
@@ -46,7 +46,7 @@ class SignUpView extends React.Component {
             placeholder="Password"
             required={true}
           />
-          {renderErrorsFor(errors, 'password')}
+          {renderErrorForRef(errors, 'password')}
         </div>
         <div className="field">
           <input
@@ -55,7 +55,7 @@ class SignUpView extends React.Component {
             placeholder="Confirm password"
             required={true}
           />
-          {renderErrorsFor(errors, 'password_confirmation')}
+          {renderErrorForRef(errors, 'password_confirmation')}
         </div>
 
         <button type="submit">Sign up</button>
@@ -63,15 +63,14 @@ class SignUpView extends React.Component {
     )
 
     return (
-      <div className="SignUpView view-container">
+      <div className="container">
         <main>
-          <header>
-            <div className="logo" />
-          </header>
-
+          <h1>
+            Sign up
+          </h1>
           {signUpForm}
 
-          <Link to="/sign_in">Log in</Link>
+          <Link to="/log_in">Log in</Link>
         </main>
       </div>
     )
@@ -113,8 +112,14 @@ class SignUpView extends React.Component {
 
 } // end class
 
-const mapStateToProps = (state) => ({
-  erorrs: state.registration.errors,
-})
+
+// ---
+// CONNECT TO STORE
+// ---
+
+
+const mapStateToProps = (state) => {
+  return state.registration
+}
 
 export default connect( mapStateToProps )( SignUpView )

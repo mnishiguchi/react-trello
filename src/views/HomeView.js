@@ -3,10 +3,12 @@ import React from 'react'
 class HomeView extends React.Component {
   render() {
     return (
-      <div className='HomeView view-container'>
-        This is HomeView
+      <main>
+        <h1>
+          HomeView
+        </h1>
         {this.props.children}
-      </div>
+      </main>
     )
   }
 }

@@ -8,14 +8,29 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action = {}) => {
-  const { currentUser } = action
+  const {
+    currentUser,
+    // socket,
+    // error,
+  } = action
 
   switch (action.type) {
-    case 'CURRENT_USER':
+    case 'SET_CURRENT_USER':
       return {
         ...state,
-        currentUser
-      };
+        currentUser,
+        error: null
+      }
+
+    case 'LOG_OUT':
+      return initialState
+      
+    case 'SESSION_ERROR':
+      return {
+        ...state,
+        error: action.error
+      }
+
     default:
       return state;
   }

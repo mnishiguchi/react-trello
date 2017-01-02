@@ -1,13 +1,18 @@
-import React            from 'react';
-// import { connect }      from 'react-redux';
-// import { routeActions } from 'react-router-redux'
+import React            from 'react'
+import { connect }      from 'react-redux'
+import { routeActions } from 'react-router-redux'
+
+import actions from '../actions'
+
+// Components
+import AppHeader from '../components/AppHeader/AppHeader'
 
 class AuthenticatedContainer extends React.Component {
   render() {
-    // TODO
     return (
       <div>
-        This is AuthenticatedContainer
+        <AppHeader />
+
         {this.props.children}
       </div>
     )
@@ -27,20 +32,31 @@ class AuthenticatedContainer extends React.Component {
   // https://github.com/hassox/guardian_db
   // https://github.com/ueberauth/guardian#plug-api
   componentDidMount() {
-    // const { dispatch, currentUser } = this.props;
-    //
-    // if (window.localStorage.getItem('phoenixAuthToken')) {
-    //   dispatch(actions.currentUser());
-    // } else {
-    //   dispatch(routeactions.push('/sign_up'));
-    // }
+    const { dispatch, currentUser } = this.props
+
+    const auth = window.localStorage.getItem('phoenixAuthToken')
+
+    if (!auth) {
+      dispatch(routeActions.push('/log_in'))
+      return
+    }
+
+    if (!currentUser) {
+      dispatch(actions.setCurrentUser())
+    }
   }
 } // end class
 
-// const mapStateToProps = (state) => ({
-//   currentUser: state.session.currentUser,
-// });
-//
-// export default connect( mapStateToProps )( AuthenticatedContainer );
 
-export default AuthenticatedContainer
+// ---
+// CONNECT TO STORE
+// ---
+
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.session.currentUser,
+  }
+}
+
+export default connect( mapStateToProps )( AuthenticatedContainer )

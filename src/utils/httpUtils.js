@@ -1,14 +1,9 @@
-import React from 'react'
-
-// The es6-promise is a polyfill for ES6-style Promises,
-// https://github.com/stefanpenner/es6-promise
-import { polyfill } from 'es6-promise'
-
 // The isomorphic-fetch adds fetch as a global so that its API is consistent
-// between client and server. We must bring our own ES6 Promise compatible polyfill,
-// such as es6-promise.
+// between client and server.
 // https://github.com/matthew-andrews/isomorphic-fetch
 import fetch from 'isomorphic-fetch'
+
+import { getAuthToken } from './authenticationUtils'
 
 
 // ---
@@ -29,7 +24,10 @@ const defaultHeaders = {
  * https://developer.mozilla.org/en-US/docs/Web/API/Headers
  */
 function buildHeaders() {
-    return { ...defaultHeaders, Authorization: getAuthToken() }
+    return {
+        ...defaultHeaders,
+        Authorization: getAuthToken()
+    }
 }
 
 
@@ -37,22 +35,6 @@ function buildHeaders() {
 // PUBLIC FUNCTIONS
 // ---
 
-
-/**
- * Stores the auth token (JWT) in the local storage.
- * https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
- */
-export function setAuthToken(jwt) {
-    window.localStorage.setItem('phoenixAuthToken', jwt)
-}
-
-/**
- * @return {Object} The auth token (JWT) for the current user if it exists.
- * https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
- */
-export function getAuthToken() {
-    return window.localStorage.getItem('phoenixAuthToken')
-}
 
 /**
  * Raises error if response status was gte 300.
@@ -134,32 +116,4 @@ export function httpDelete(url) {
     .then(parseJSON)
 
     return promise
-}
-
-/**
- * Updates the document title with the specified string.
- * @param {String} title
- */
-export function setDocumentTitle(title) {
-    document.title = `${title} | Project manager`
-}
-
-/**
- * A component that displays an error message.
- * @param  {?} errors
- * @param  {?} ref
- */
-export function renderErrorsFor(errors, ref) {
-
-    if (!errors) { return false }
-
-    return errors.map((error, i) => {
-        if (error[ref]) {
-            return (
-                <div key={i} className="error">
-                  {error[ref]}
-                </div>
-            )
-        }
-    })
 }

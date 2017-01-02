@@ -1,26 +1,61 @@
-import React                    from 'react'
-import ReactDOM                 from 'react-dom'
+import React, { PropTypes as T }  from 'react'
+import ReactDOM                   from 'react-dom'
+import { Provider }               from 'react-redux'
+import { Router, browserHistory}  from 'react-router'
+import { syncHistoryWithStore }   from 'react-router-redux'
+import invariant                  from 'invariant'
 
-import { Provider }               from 'react-redux';
-import { Router, RoutingContent } from 'react-router';
-import { browserHistory }         from 'react-router'
+import configureStore  from './store'
+import configureRoutes from './routes'
 
-import routes from './routes'
+const store   = configureStore(browserHistory)
+const history = syncHistoryWithStore(browserHistory, store)
 
 // Global styles
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
-import './index.css';
 
-const Hello = () => (<div>Hello</div>)
 
-const node = (
-  <Router history={browserHistory}>
-    {routes}
-  </Router>
-)
+// ---
+// CONFIGURE ROOT NODE
+// ---
+
+
+class Root extends React.Component {
+
+  static propTypes = {
+    routerHistory: T.object.isRequired,
+    store:         T.object.isRequired
+  }
+
+  render() {
+    const { routerHistory, store } = this.props
+
+    invariant(
+      routerHistory,
+      '<Root /> needs either a routingContext or routerHistory to render.'
+    )
+
+    return (
+      <Provider store={store}>
+        <Router history={routerHistory}>
+          {configureRoutes(store)}
+        </Router>
+      </Provider>
+    )
+  }
+}
+
+
+// ---
+// START UP
+// ---
+
 
 ReactDOM.render(
-  node,
+  <Root
+    routerHistory={history}
+    store={store}
+  />,
   document.querySelector('#root')
 )

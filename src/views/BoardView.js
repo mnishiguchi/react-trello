@@ -3,9 +3,13 @@ import React from 'react'
 class BoardView extends React.Component {
   render() {
     return (
-      <div className="BoardView view-container">
-        This is BoardView
-        {this.props.children}
+      <div className='container'>
+        <main>
+          <h1>
+            BoardView
+          </h1>
+          {this.props.children}
+        </main>
       </div>
     )
   }

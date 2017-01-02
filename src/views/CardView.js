@@ -3,9 +3,13 @@ import React from 'react'
 class CardView extends React.Component {
   render() {
     return (
-      <div className='CardView view-container'>
-        This is CardView
-        {this.props.children}
+      <div className='container'>
+        <main>
+          <h1>
+            CardView
+          </h1>
+          {this.props.children}
+        </main>
       </div>
     )
   }

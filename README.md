@@ -15,6 +15,18 @@ Then visit [`localhost:3000`](http://localhost:3000) from your browser.
 
 ---
 
+## API
+
+```ex
+registration_path  POST    /api/v1/registrations
+     session_path  POST    /api/v1/sessions      
+     session_path  DELETE  /api/v1/sessions      
+current_user_path  GET     /api/v1/current_user  
+```
+
+---
+
+
 ## React resources
 
 - [`React.createClass` versus `extends React.Component`](https://toddmotto.com/react-create-class-versus-component/)
