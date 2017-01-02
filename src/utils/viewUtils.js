@@ -1,4 +1,5 @@
 import React from 'react'
+import S     from 'string'
 
 /**
  * Updates the document title with the specified string.
@@ -24,4 +25,32 @@ export function renderErrorForRef(errors, ref) {
             </div>
         ) : null
     ))
+}
+
+/**
+ * http://stringjs.com/#methods/humanize
+ */
+export function renderField(fieldName, opts={}) {
+  const {
+    type,
+    placeholder,
+    label,
+    required,
+  } = opts
+
+  return (
+    <div className="form-group">
+      <label htmlFor={fieldName}>
+        {label || S(fieldName).humanize().s}
+      </label>
+      <input
+        type={type || 'text'}
+        className="form-control"
+        id={fieldName}
+        ref={fieldName}
+        placeholder={placeholder || ''}
+        required={required || true}
+      />
+    </div>
+  )
 }

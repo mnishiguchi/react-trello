@@ -2,6 +2,8 @@ import React                from 'react'
 import { connect }          from 'react-redux'
 import { Link }             from 'react-router'
 
+import { renderField } from '../utils/viewUtils'
+
 import { setDocumentTitle, renderErrorForRef }  from '../utils/viewUtils'
 
 import actions from '../actions'
@@ -12,63 +14,40 @@ class SignUpView extends React.Component {
 
     const signUpForm = (
       <form onSubmit={this._handleSubmit}>
-        <div className="field">
-          <input
-            type="text"
-            ref="first_name"
-            placeholder="First name"
-            required={true}
-          />
-          {renderErrorForRef(errors, 'first_name')}
-        </div>
-        <div className="field">
-          <input
-            type="text"
-            ref="last_name"
-            placeholder="Last name"
-            required={true}
-          />
-          {renderErrorForRef(errors, 'last_name')}
-        </div>
-        <div className="field">
-          <input
-            type="email"
-            ref="email"
-            placeholder="Email"
-            required={true}
-          />
-          {renderErrorForRef(errors, 'email')}
-        </div>
-        <div className="field">
-          <input
-            type="password"
-            ref="password"
-            placeholder="Password"
-            required={true}
-          />
-          {renderErrorForRef(errors, 'password')}
-        </div>
-        <div className="field">
-          <input
-            type="password"
-            ref="password_confirmation"
-            placeholder="Confirm password"
-            required={true}
-          />
-          {renderErrorForRef(errors, 'password_confirmation')}
-        </div>
+        {renderField('first_name')}
+        {renderErrorForRef(errors, 'first_name')}
 
-        <button type="submit">Sign up</button>
+        {renderField('last_name')}
+        {renderErrorForRef(errors, 'last_name')}
+
+        {renderField('email')}
+        {renderErrorForRef(errors, 'email')}
+
+        {renderField('password')}
+        {renderErrorForRef(errors, 'password')}
+
+        {renderField('password_confirmation')}
+        {renderErrorForRef(errors, 'password_confirmation')}
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          Sign up
+        </button>
       </form>
     )
 
     return (
       <div className="container">
-        <main>
+        <main style={{margin: '2rem 0'}}>
           <h1>
             Sign up
           </h1>
+
           {signUpForm}
+
+          <div className="mt-1" />
 
           <Link to="/log_in">Log in</Link>
         </main>

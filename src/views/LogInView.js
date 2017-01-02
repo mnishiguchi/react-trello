@@ -3,7 +3,10 @@ import { connect }              from 'react-redux'
 import { Link }                 from 'react-router'
 
 import { setDocumentTitle } from '../utils/viewUtils'
-import actions              from '../actions'
+
+import actions         from '../actions'
+import { renderField } from '../utils/viewUtils'
+
 
 class LogInView extends React.Component {
   render() {
@@ -11,36 +14,28 @@ class LogInView extends React.Component {
       <form onSubmit={e => this._handleSubmit(e)}>
         {this._renderError()}
 
-        <div className="field">
-          <input
-            ref="email"
-            type="Email"
-            placeholder="Email"
-            required="true"
-            defaultValue="user@example.com"
-          />
-        </div>
-        <div className="field">
-          <input
-            ref="password"
-            type="password"
-            placeholder="Password"
-            required="true"
-            defaultValue="password"
-          />
-        </div>
-        <button type="submit">Sign in</button>
+        {renderField('email', {type: 'email'})}
+        {renderField('password', {type: 'password'})}
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          Log in
+        </button>
       </form>
     )
 
     return (
       <div className='container'>
-        <main>
+        <main style={{margin: '2rem 0'}}>
           <h1>
             Log in
           </h1>
 
           {logInForm}
+
+          <div className="mt-1" />
 
           <Link to="/sign_up">Create new account</Link>
         </main>
