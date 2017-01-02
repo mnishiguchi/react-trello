@@ -1,5 +1,7 @@
 import React from 'react'
-// import { Link } from 'react-router';
+
+// Components
+import AppHeader from '../components/AppHeader/AppHeader';
 
 import './MainLayout.css'
 
@@ -7,9 +9,13 @@ const MainLayout = (props) => {
   const { children } = props
 
   return (
-    <div className="MainLayout container">
-      {children}
+    <div className="MainLayout">
+      <AppHeader />
+      <main className="container">
+        {children}
+      </main>
     </div>
+
   )
 }
 
